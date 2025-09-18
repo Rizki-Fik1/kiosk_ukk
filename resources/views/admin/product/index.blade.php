@@ -14,6 +14,7 @@
         <form method="POST" action="/admin/products" class="mb-6">
             @csrf
             <input type="text" name="name" placeholder="Name" class="border p-2 mr-2" required>
+            <input type="text" name="description" placeholder="Description" class="border p-2 mr-2" required>
             <input type="number" name="price" placeholder="Price" class="border p-2 mr-2" required>
             <input type="number" name="stock" placeholder="Stock" class="border p-2 mr-2" required>
             <button type="submit" class="bg-blue-500 text-white px-4 py-2">Add</button>
@@ -25,6 +26,7 @@
                 <tr class="bg-gray-200">
                     <th class="p-2 border">ID</th>
                     <th class="p-2 border">Name</th>
+                    <th class="p-2 border">Description</th>
                     <th class="p-2 border">Price</th>
                     <th class="p-2 border">Stock</th>
                 </tr>
@@ -34,6 +36,7 @@
                     <tr>
                         <td class="p-2 border">{{ $p->id }}</td>
                         <td class="p-2 border">{{ $p->name }}</td>
+                        <td class="p-2 border">{{ $p->description }}</td>
                         <td class="p-2 border">Rp {{ number_format($p->price, 0, ',', '.') }}</td>
                         <td class="p-2 border">{{ $p->stock }}</td>
                     </tr>

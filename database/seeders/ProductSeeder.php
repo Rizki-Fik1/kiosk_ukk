@@ -11,6 +11,7 @@ class ProductSeeder extends Seeder
     {
         Product::create([
             'name' => 'Indomie Goreng',
+            'description' => 'FERfefjnefewiffe',
             'price' => 3500,
             'stock' => 100,
             'image' => null,
@@ -18,6 +19,7 @@ class ProductSeeder extends Seeder
 
         Product::create([
             'name' => 'Aqua Botol 600ml',
+            'description' => 'FERfefjnefewiffe',
             'price' => 5000,
             'stock' => 50,
             'image' => null,
