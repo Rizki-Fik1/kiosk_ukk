@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
             'description' => 'FERfefjnefewiffe',
             'price' => 3500,
             'stock' => 100,
-            'image' => null,
+            'image' => 'https://via.placeholder.com/150',
         ]);
 
         Product::create([
@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
             'description' => 'FERfefjnefewiffe',
             'price' => 5000,
             'stock' => 50,
-            'image' => null,
+            'image' => 'https://via.placeholder.com/150',
         ]);
     }
 }
