@@ -59,6 +59,7 @@
                                 <th class="p-3 border">Price</th>
                                 <th class="p-3 border">Stock</th>
                                 <th class="p-3 border">Image</th>
+                                <th class="p-3 border">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -77,6 +78,23 @@
                                             <span class="text-gray-400">No image</span>
                                         @endif
                                     </td>
+                                    <td class="p-3 border text-center">
+                                        <div class="flex gap-2 justify-center">
+                                            <button onclick="openEditModal({{ $p->id }}, '{{ $p->name }}', '{{ $p->description }}', {{ $p->price }}, {{ $p->stock }})"
+                                                class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
+                                                Edit
+                                            </button>
+                                            <form method="POST" action="{{ route('products.destroy', $p->id) }}" 
+                                                onsubmit="return confirm('Are you sure you want to delete this product?')" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" 
+                                                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -87,4 +105,76 @@
             @endif
         </div>
     </div>
+
+    {{-- Edit Product Modal --}}
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300">Edit Product</h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <form id="editForm" method="POST" enctype="multipart/form-data" class="space-y-3">
+                @csrf
+                @method('PUT')
+                <div class="flex flex-col gap-3">
+                    <input type="text" id="editName" name="name" placeholder="Name"
+                        class="border rounded p-2" required>
+
+                    <textarea id="editDescription" name="description" placeholder="Description"
+                        class="border rounded p-2"></textarea>
+
+                    <input type="number" id="editPrice" name="price" placeholder="Price"
+                        class="border rounded p-2" required>
+
+                    <input type="number" id="editStock" name="stock" placeholder="Stock"
+                        class="border rounded p-2" required>
+
+                    <input type="file" name="image" class="border rounded p-2">
+                    <small class="text-gray-500">Leave empty to keep current image</small>
+
+                    <div class="flex gap-2">
+                        <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded flex-1">
+                            Update Product
+                        </button>
+                        <button type="button" onclick="closeEditModal()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditModal(id, name, description, price, stock) {
+            document.getElementById('editModal').classList.remove('hidden');
+            document.getElementById('editModal').classList.add('flex');
+            
+            document.getElementById('editName').value = name;
+            document.getElementById('editDescription').value = description;
+            document.getElementById('editPrice').value = price;
+            document.getElementById('editStock').value = stock;
+            
+            document.getElementById('editForm').action = `/admin/products/${id}`;
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('hidden');
+            document.getElementById('editModal').classList.remove('flex');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+    </script>
 </x-app-layout>
