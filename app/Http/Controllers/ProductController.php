@@ -18,18 +18,15 @@ class ProductController extends Controller
         );
     }
 
-    /**
-     * Tampilkan semua produk
-     */
+    //Read Product
     public function index()
     {
         $products = Product::all();
         return view('admin.product.index', compact('products'));
     }
 
-    /**
-     * Simpan produk baru
-     */
+  
+    //Save Product
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -56,9 +53,8 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product added!');
     }
 
-    /**
-     * Update produk
-     */
+ 
+    //Update Product
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
@@ -69,7 +65,6 @@ class ProductController extends Controller
             'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Jika ada upload file baru
         if ($request->hasFile('image')) {
             // Hapus gambar lama di Cloudinary
             if ($product->image_id) {
@@ -91,9 +86,8 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product updated!');
     }
 
-    /**
-     * Hapus produk
-     */
+
+    //Delete Product
     public function destroy(Product $product)
     {
         // Hapus file di Cloudinary
