@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name', 100);
             $table->text('description');
             $table->decimal('price', 10, 2);
-            $table->integer('stock');
+            $table->integer('stock')->default(0); // stok saat ini
+            $table->boolean('is_active')->default(true);
             $table->string('image')->nullable();
             $table->string('image_id')->nullable();
             $table->timestamps();
