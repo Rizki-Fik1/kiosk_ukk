@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity'); 
-            $table->decimal('purchase_price', 10, 2); // harga modal per unit
+            $table->string('supplier_name')->nullable();
+            $table->decimal('total_amount');
+            $table->date('purchase_date');
             $table->timestamps();
         });
     }
