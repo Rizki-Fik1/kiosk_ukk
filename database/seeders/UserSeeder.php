@@ -10,10 +10,20 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        // Admin user (pemilik toko)
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password123'),
+            'name' => 'Admin Toko',
+            'email' => 'admin@toko.com',
+            'password' => Hash::make('admin123'),
+            'role' => 'admin',
+        ]);
+
+        // Kiosk user (untuk device kiosk)
+        User::create([
+            'name' => 'Kiosk Device',
+            'email' => 'kiosk@toko.com',
+            'password' => Hash::make('kiosk123'),
+            'role' => 'kiosk',
         ]);
     }
 }

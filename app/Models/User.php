@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,41 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // === RELATIONSHIPS ===
+
+    /**
+     * User bisa punya banyak sales (sebagai kasir/admin)
+     */
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    /**
+     * User bisa punya banyak stock adjustments (yang dia buat)
+     */
+    public function stockAdjustments()
+    {
+        return $this->hasMany(StockAdjustment::class, 'created_by');
+    }
+
+    // === BUSINESS LOGIC METHODS ===
+
+    /**
+     * Cek apakah user adalah admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Cek apakah user adalah kiosk
+     */
+    public function isKiosk(): bool
+    {
+        return $this->role === 'kiosk';
     }
 }
