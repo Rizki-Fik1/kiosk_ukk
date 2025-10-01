@@ -20,7 +20,7 @@ class PurchaseController extends Controller
         ->orderBy('created_at', 'desc')
         ->paginate(10);
 
-        retun view('admin.purchase.index', compact('purchase'))
+        return view('admin.purchase.index', compact('purchases'));
     }
 
     /**
@@ -32,7 +32,7 @@ class PurchaseController extends Controller
         ->orderBy('name')
         ->get();
 
-        return view('admin.puchase.index', compact('prodcuts'))
+        return view('admin.purchase.create', compact('prodcuts'));
     }
 
     /**
@@ -58,13 +58,13 @@ class PurchaseController extends Controller
 
             $totalAmount =0;
 
-            foreach ($validated['items'] as $items) {
+            foreach ($validated['items'] as $item) {
                 $product = Product::find($item['product_id']);
 
                 $subtotal = $item['quantity'] * $item['cost_price'];
 
                 PurchaseItem::create([
-                    'puchase_id' => $purchase->id,
+                    'purchase_id' => $purchase->id,
                     'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                     'cost_price' => $item['cost_price'],
@@ -76,16 +76,16 @@ class PurchaseController extends Controller
                 $totalAmount += $subtotal;
             }
 
-            $purchase->update(['total_amount' => $totalAmount])
+            $purchase->update(['total_amount' => $totalAmount]);
         });
 
-        return redirect()->route('purchase.index')->width('success', 'Purchase added!');
+        return redirect()->route('purchases.index')->with('success', 'Purchase added!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Purchase $purchase)
     {
         $purchase->load('purchaseItems.product');
 
