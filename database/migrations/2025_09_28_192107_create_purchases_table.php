@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
             $table->string('supplier_name')->nullable();
-            $table->decimal('total_amount');
+            $table->decimal('total_amount', 12, 2); // Fix: 12 digits total, 2 decimal places
             $table->date('purchase_date');
             $table->timestamps();
         });
