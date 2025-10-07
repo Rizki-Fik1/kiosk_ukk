@@ -10,10 +10,31 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique(); // ID unik (gateway/local)
-            $table->decimal('amount', 10, 2); // total transaksi
-            $table->enum('status', ['pending', 'paid', 'failed', 'refunded'])->default('pending');
-            $table->string('payment_method')->nullable(); // e.g. cash, qris, gopay
+
+            // Relasi ke sales (nota penjualan)
+            $table->foreignId('sale_id')->constrained('sales')->onDelete('cascade');
+
+            // ID unik dari payment gateway (Midtrans, dll.)
+            $table->string('reference')->unique();
+
+            // Jumlah pembayaran (biasanya = sales.total_amount, 
+            // tapi bisa berbeda kalau ada refund/discount dll.)
+            $table->decimal('amount', 10, 2);
+
+            // Status transaksi
+            $table->enum('status', [
+                'pending',    // order dibuat tapi belum dibayar
+                'paid',       // sukses dibayar
+                'failed',     // gagal dibayar
+                'refunded'    // sudah dikembalikan
+            ])->default('pending');
+
+            // Metode pembayaran (cash, qris, gopay, bank_transfer, dll.)
+            $table->string('payment_method')->nullable();
+
+            // Data tambahan dari gateway (misalnya response JSON Midtrans)
+            $table->json('payload')->nullable();
+
             $table->timestamps();
         });
     }

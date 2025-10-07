@@ -52,7 +52,7 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full border border-gray-200 dark:border-gray-700 text-sm">
                         <thead>
-                            <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            <tr class="bg-gray-100 dark:bg-gray-700 text-white dark:text-gray-300">
                                 <th class="p-3 border">ID</th>
                                 <th class="p-3 border">Name</th>
                                 <th class="p-3 border">Description</th>
