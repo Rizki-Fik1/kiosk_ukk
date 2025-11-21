@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone')->unique(); // Format: 08xxxxxxxxxx
+            $table->string('phone')->unique(); 
+            $table->text('address');
             $table->timestamp('phone_verified_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
