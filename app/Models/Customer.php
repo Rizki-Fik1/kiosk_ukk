@@ -151,4 +151,12 @@ class Customer extends Authenticatable
     {
         return $query->where('is_active', false);
     }
+
+    /**
+     * Customer has many transactions
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

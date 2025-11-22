@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->integer('min_stock')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->string('image')->nullable();
+            $table->text('image')->nullable(); // Changed to TEXT for data URLs
             $table->string('image_id')->nullable();
             $table->timestamps();
         });

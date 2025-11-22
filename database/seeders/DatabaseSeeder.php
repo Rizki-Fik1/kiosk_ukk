@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed admin and kiosk users
+        // Seed admin, kiosk users, and sample products
         $this->call([
             AdminSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }
